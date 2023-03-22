@@ -1,0 +1,68 @@
+server:
+  port: 0
+
+# Setting
+spring:
+  application:
+    name: rank-service
+  # H2
+  datasource:
+    jdbc-url: jdbc:h2:~/ch;AUTO_SERVER=true
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  # JPA
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+
+# Eureka
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+
+logging:
+  level:
+    com.ch.rank: debug
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+
+# JPA Query log
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+      multiline: true
+
+springdoc:
+  swagger-ui:
+    path: /doc/swagger
+    operations-sorter: method
+
+kakao:
+  openapi:
+    url: https://dapi.kakao.com/v2
+    auth: KakaoAK 61aeb2d6faee3e3c770042245bfb4a76
+
+naver:
+  openapi:
+    url: https://openapi.naver.com/v1
+    client:
+      id: mXnqwWe14vMz8oP0GUTk
+      secret: 7hsPA7oR2k
